@@ -43,6 +43,14 @@ jobs:
               tidy: "/usr/bin/clang-tidy-12",
             }
           - {
+              name: "Ubuntu 24.04 Clang",
+              os: "ubuntu-24.04",
+              cc: "/usr/bin/clang-14",
+              cxx: "/usr/bin/clang++-14",
+              format: "/usr/bin/clang-format-14",
+              tidy: "/usr/bin/clang-tidy-14",
+            }
+          - {
               name: "Ubuntu 20.04 Clang",
               os: "ubuntu-20.04",
               cc: "/usr/bin/clang-12",
