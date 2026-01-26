@@ -55,16 +55,16 @@ jobs:
               os: macos-13,
               cc: "/usr/bin/clang",
               cxx: "/usr/bin/clang++",
-              format: "/usr/local/opt/llvm@13/bin/clang-format",
-              tidy: "/usr/local/opt/llvm@13/bin/clang-tidy",
+              format: "/usr/local/opt/llvm@14/bin/clang-format",
+              tidy: "/usr/local/opt/llvm@14/bin/clang-tidy",
             }
           - {
               name: "macOS 14",
               os: macos-14,
               cc: "/usr/bin/clang",
               cxx: "/usr/bin/clang++",
-              format: "/usr/local/opt/llvm@13/bin/clang-format",
-              tidy: "/usr/local/opt/llvm@13/bin/clang-tidy",
+              format: "/usr/local/opt/llvm@14/bin/clang-format",
+              tidy: "/usr/local/opt/llvm@14/bin/clang-tidy",
             }
     steps:
       - uses: actions/checkout@v4
