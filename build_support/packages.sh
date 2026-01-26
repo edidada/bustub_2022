@@ -11,8 +11,7 @@
 ##  * Ubuntu 20.04 (x86-64)
 ##  * Ubuntu 22.04 (x86-64)
 ##  * Ubuntu 24.04 (x86-64)
-##  * macOS 11 Big Sur (x86-64 or ARM)
-##  * macOS 12 Monterey (x86-64 or ARM)
+##  * macOS 14
 ## =================================================================
 
 main() {
@@ -82,7 +81,7 @@ install_mac() {
   brew ls --versions coreutils || brew install coreutils
   brew ls --versions doxygen || brew install doxygen
   brew ls --versions git || brew install git
-  (brew ls --versions llvm | grep 12) || brew install llvm@12
+  (brew ls --versions llvm | grep 13) || brew install llvm@13
 }
 
 install_linux() {
