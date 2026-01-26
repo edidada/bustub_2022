@@ -2,9 +2,9 @@ name: CMake Build Matrix
 
 on:
   push:
-    branches: [master]
+    branches: [master_ubuntu24]
   pull_request:
-    branches: [master]
+    branches: [master_ubuntu24]
 
 env:
   BUILD_TYPE: Debug
@@ -41,6 +41,14 @@ jobs:
               cxx: "/usr/bin/clang++-12",
               format: "/usr/bin/clang-format-12",
               tidy: "/usr/bin/clang-tidy-12",
+            }
+          - {
+              name: "Ubuntu 24.04 Clang",
+              os: "ubuntu-24.04",
+              cc: "/usr/bin/clang-14",
+              cxx: "/usr/bin/clang++-14",
+              format: "/usr/bin/clang-format-14",
+              tidy: "/usr/bin/clang-tidy-14",
             }
           - {
               name: "macOS 13",
