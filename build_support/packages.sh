@@ -10,6 +10,7 @@
 ##  * Ubuntu 18.04 (x86-64)
 ##  * Ubuntu 20.04 (x86-64)
 ##  * Ubuntu 22.04 (x86-64)
+##  * Ubuntu 24.04 (x86-64)
 ##  * macOS 11 Big Sur (x86-64 or ARM)
 ##  * macOS 12 Monterey (x86-64 or ARM)
 ## =================================================================
@@ -17,14 +18,14 @@
 main() {
   set -o errexit
 
-    if [ "$1" == "-y" ] 
-    then 
+    if [ "$1" == "-y" ]
+    then
         install
     else
         echo "PACKAGES WILL BE INSTALLED. THIS MAY BREAK YOUR EXISTING TOOLCHAIN."
         echo "YOU ACCEPT ALL RESPONSIBILITY BY PROCEEDING."
         read -p "Proceed? [Y/n] : " yn
-    
+
         case $yn in
             Y|y) install;;
             *) ;;
@@ -47,6 +48,7 @@ install() {
         18.04) install_linux ;;
         20.04) install_linux ;;
         22.04) install_linux ;;
+        24.04) install_linux_2404 ;;  # 添加 Ubuntu 24.04 支持
         *) give_up ;;
       esac
       ;;
@@ -96,6 +98,25 @@ install_linux() {
       doxygen \
       git \
       g++-12 \
+      pkg-config \
+      zlib1g-dev
+}
+
+# 添加 Ubuntu 24.04 特定的安装函数
+install_linux_2404() {
+  # Update apt-get.
+  apt-get -y update
+  # Install packages.
+  # Ubuntu 24.04 可能需要更新的版本
+  apt-get -y install \
+      build-essential \
+      clang-14 \
+      clang-format-14 \
+      clang-tidy-14 \
+      cmake \
+      doxygen \
+      git \
+      g++-14 \
       pkg-config \
       zlib1g-dev
 }
