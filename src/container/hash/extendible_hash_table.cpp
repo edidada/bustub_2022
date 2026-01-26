@@ -9,7 +9,7 @@
 // Copyright (c) 2022, Carnegie Mellon University Database Group
 //
 //===----------------------------------------------------------------------===//
-
+#include <algorithm>
 #include <cassert>
 #include <cstdlib>
 #include <functional>
