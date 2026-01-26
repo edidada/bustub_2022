@@ -35,8 +35,8 @@ jobs:
               tidy: "/usr/bin/clang-tidy-12",
             }
           - {
-              name: "macOS 13",
-              os: macos-13,
+              name: "macOS 15",
+              os: macos-15,
               cc: "/usr/bin/clang",
               cxx: "/usr/bin/clang++",
               format: "/usr/local/opt/llvm@13/bin/clang-format",
