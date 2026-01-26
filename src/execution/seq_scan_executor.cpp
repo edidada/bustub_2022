@@ -27,7 +27,7 @@ void SeqScanExecutor::Init() {
       if (!is_locked) {
         throw ExecutionException("SeqScan Executor Get Table Lock Failed");
       }
-    } catch (TransactionAbortException e) {
+    } catch (const TransactionAbortException &e) {
       throw ExecutionException("SeqScan Executor Get Table Lock Failed" + e.GetInfo());
     }
   }
@@ -61,7 +61,7 @@ auto SeqScanExecutor::Next(Tuple *tuple, RID *rid) -> bool {
       if (!is_locked) {
         throw ExecutionException("SeqScan Executor Get Table Lock Failed");
       }
-    } catch (TransactionAbortException e) {
+    } catch (const TransactionAbortException &e) {
       throw ExecutionException("SeqScan Executor Get Row Lock Failed");
     }
   }
