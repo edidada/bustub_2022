@@ -126,7 +126,7 @@ class TransactionAbortException : public std::exception {
       : txn_id_(txn_id), abort_reason_(abort_reason) {}
   auto GetTransactionId() -> txn_id_t { return txn_id_; }
   auto GetAbortReason() -> AbortReason { return abort_reason_; }
-  auto GetInfo() -> std::string {
+  auto GetInfo() const -> std::string {
     switch (abort_reason_) {
       case AbortReason::LOCK_ON_SHRINKING:
         return "Transaction " + std::to_string(txn_id_) +
