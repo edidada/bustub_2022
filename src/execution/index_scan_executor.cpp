@@ -31,7 +31,7 @@ void IndexScanExecutor::Init() {
         if (!is_locked) {
           throw ExecutionException("IndexScan Executor Get Table Lock Failed");
         }
-      } catch (TransactionAbortException e) {
+      } catch (const TransactionAbortException &e) {
         throw ExecutionException("IndexScan Executor Get Table Lock Failed" + e.GetInfo());
       }
     }
