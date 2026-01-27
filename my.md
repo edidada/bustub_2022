@@ -224,7 +224,6 @@ p3.leaderboard-q3_test   # 排行榜查询3
 test-p3                  # 运行所有P3测试
 
 5. 工具命令（Utility Commands）
-
 format                  # 代码格式化
 check-format            # 检查代码格式
 check-lint              # 代码lint检查
@@ -242,10 +241,7 @@ submit-p3              # 提交项目3
 check-clang-tidy-p4     # 项目4检查
 submit-p4              # 提交项目4
 
-
 6. 构建系统命令（Build System）
-
-
 clean                   # 清理构建
 rebuild_cache           # 重新生成缓存
 edit_cache              # 编辑缓存
@@ -255,19 +251,13 @@ install                 # 安装
 install/local           # 本地安装
 install/strip           # 剥离符号安装
 
-
 7. 测试套件命令
-
-
 build-tests             # 构建所有测试
 check-tests             # 检查测试
 check-public-ci-tests   # 检查公共CI测试
 
-
 二、常用命令示例
-
 运行程序
-
 # 运行交互式Shell
 cmake --build . --target shell
 ./shell
@@ -275,9 +265,7 @@ cmake --build . --target shell
 # 或直接运行
 ./tools/shell/bustub-shell
 
-
 运行测试
-
 # 运行单个测试
 cmake --build . --target buffer_pool_manager_instance_test
 ./test/buffer_pool_manager_instance_test
