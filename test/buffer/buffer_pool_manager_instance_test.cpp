@@ -49,8 +49,8 @@ TEST(BufferPoolManagerInstanceTest, BinaryDataTest) {
   }
 
   // Insert terminal characters both in the middle and at end
-  random_binary_data[BUSTUB_PAGE_SIZE / 2] = '\0';
-  random_binary_data[BUSTUB_PAGE_SIZE - 1] = '\0';
+  random_binary_data[BUSTUB_PAGE_SIZE / 2] = 0;
+  random_binary_data[BUSTUB_PAGE_SIZE - 1] = 0;
 
   // Scenario: Once we have a page, we should be able to read and write content.
   std::memcpy(page0->GetData(), random_binary_data, BUSTUB_PAGE_SIZE);
