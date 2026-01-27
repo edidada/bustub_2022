@@ -30,7 +30,7 @@ TEST(BufferPoolManagerInstanceTest, BinaryDataTest) {
 
   std::random_device r;
   std::default_random_engine rng(r());
-  std::uniform_int_distribution<char> uniform_dist(0);
+  std::uniform_int_distribution<uint8_t> uniform_dist(0);
 
   auto *disk_manager = new DiskManager(db_name);
   auto *bpm = new BufferPoolManagerInstance(buffer_pool_size, disk_manager, k);
@@ -42,9 +42,9 @@ TEST(BufferPoolManagerInstanceTest, BinaryDataTest) {
   ASSERT_NE(nullptr, page0);
   EXPECT_EQ(0, page_id_temp);
 
-  char random_binary_data[BUSTUB_PAGE_SIZE];
+  uint8_t random_binary_data[BUSTUB_PAGE_SIZE];
   // Generate random binary data
-  for (char &i : random_binary_data) {
+  for (uint8_t &i : random_binary_data) {
     i = uniform_dist(rng);
   }
 

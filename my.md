@@ -365,3 +365,87 @@ project3-submission.zip
 
 cmake --build . --target submit-p4
 project4-submission.zip
+
+
+这个错误是 **macOS + Clang + libc++** 的标准库实现特有问题（libstdc++ / GCC 那边完全没这个限制）。
+
+### 核心原因
+- 你在测试代码里用了：
+  ```cpp
+  std::uniform_int_distribution<char> uniform_dist(0);
+  ```
+  生成随机 `char` 值（范围默认 [0, 255] 因为 char 通常 8-bit）。
+
+- 在 **libc++**（Apple Clang 默认用的 C++ 标准库）中，`std::uniform_int_distribution` **明确不支持** `char`、`signed char`、`unsigned char` 作为模板参数（IntType）。  
+  它只允许：short、int、long、long long 及其 unsigned 版本（C++ 标准没强制要求支持 char，但 libc++ 严格遵守并加了 static_assert 拒绝）。
+
+- 从 libc++ 15.0 开始（macOS Sonoma / Xcode 15+ 基本都用 15+ 版本），这个限制被**严格执行**，直接 static_assert 失败，报错：
+  ```
+  static_assert(__libcpp_random_is_valid_inttype<char>::value, "IntType must be a supported integer type");
+  ```
+
+- GCC / libstdc++（Ubuntu 默认）把 `char` 当成普通整数类型，支持，没问题。所以你在 Ubuntu/GCC 上正常。
+
+### 推荐修复方式（改测试代码，永久解决）
+
+把 `char` 改成 `unsigned char` 或 `uint8_t`（推荐），因为生成随机**字节**（binary data）时，`unsigned char` 语义更清晰，也避开 signed char 的符号问题。
+
+**最佳改法**（兼容 macOS Clang + Ubuntu GCC）：
+```cpp
+#include <cstdint>   // 加这个，引入 uint8_t
+
+// 原：std::uniform_int_distribution<char> uniform_dist(0);
+// 改成：
+std::uniform_int_distribution<uint8_t> uniform_dist(0);  // 或 unsigned char
+
+// 然后生成数据时：
+uint8_t random_binary_data[BUSTUB_PAGE_SIZE];   // 改成 uint8_t 数组
+
+for (uint8_t &i : random_binary_data) {
+  i = uniform_dist(rng);
+}
+
+// 插入 '\0' 时也改：
+random_binary_data[BUSTUB_PAGE_SIZE / 2] = 0;     // 直接用 0
+random_binary_data[BUSTUB_PAGE_SIZE - 1] = 0;
+
+// memcpy 时类型匹配：
+std::memcpy(page0->GetData(), random_binary_data, BUSTUB_PAGE_SIZE);
+EXPECT_EQ(0, std::memcmp(page0->GetData(), random_binary_data, BUSTUB_PAGE_SIZE));
+```
+
+- `uint8_t` 是 `<cstdint>` 里的固定宽度类型，libc++ 支持它作为扩展（从 libc++ 文档看，明确支持 int8_t / uint8_t）。
+- 功能完全一样：生成 0~255 的随机字节。
+- 数组用 `uint8_t` 更安全（避免 signed char 的符号扩展问题）。
+
+### 其他可行方案（如果不想改数组类型）
+
+1. 用 `unsigned int` 或 `int` 生成，再 cast：
+   ```cpp
+   std::uniform_int_distribution<unsigned int> uniform_dist(0, 255);
+   // 然后
+   for (size_t i = 0; i < BUSTUB_PAGE_SIZE; ++i) {
+     random_binary_data[i] = static_cast<char>(uniform_dist(rng));
+   }
+   ```
+
+2. 用 `std::uniform_int_distribution<int>`（最简单兼容）：
+   ```cpp
+   std::uniform_int_distribution<int> uniform_dist(0, 255);
+   // 同上 cast
+   ```
+
+3. 如果你 fork 的是 2022 版本的老仓库，这个 test 很可能已经被上游修复（查官方 bustub master 的 test/buffer/buffer_pool_manager_instance_test.cpp，看看他们怎么写的）。
+
+### 快速验证
+改完后在 macOS 上重新编译：
+```bash
+cd build
+cmake -DCMAKE_BUILD_TYPE=Debug ..
+make buffer_pool_manager_instance_test
+./bin/buffer_pool_manager_instance_test   # 或 ctest -R BinaryDataTest -VV
+```
+
+改成 `uint8_t` 后，macOS Clang 就过了（因为 libc++ 允许 int8_t/uint8_t 作为扩展）。
+
+这是 BusTub 测试代码里很常见的跨平台坑（macOS 用户经常踩），改成 uint8_t 就能一劳永逸。改完如果还有其他问题，把新报错贴出来，我继续帮你看。
