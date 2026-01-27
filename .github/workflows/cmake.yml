@@ -39,16 +39,16 @@ jobs:
               os: macos-15-intel,
               cc: "/usr/bin/clang",
               cxx: "/usr/bin/clang++",
-              format: "/usr/local/opt/llvm@14/bin/clang-format",
-              tidy: "/usr/local/opt/llvm@14/bin/clang-tidy",
+              format: "/opt/homebrew/opt/llvm@14/bin/clang-format",
+              tidy: "/opt/homebrew/opt/llvm@14/bin/clang-tidy",
             }
           - {
               name: "macOS 14 Intel",
               os: macos-14-large,
               cc: "/usr/bin/clang",
               cxx: "/usr/bin/clang++",
-              format: "/usr/local/opt/llvm@14/bin/clang-format",
-              tidy: "/usr/local/opt/llvm@14/bin/clang-tidy",
+              format: "/opt/homebrew/opt/llvm@14/bin/clang-format",
+              tidy: "/opt/homebrew/opt/llvm@14/bin/clang-tidy",
             }
     steps:
       - uses: actions/checkout@v4
