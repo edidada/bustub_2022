@@ -417,9 +417,7 @@ EXPECT_EQ(0, std::memcmp(page0->GetData(), random_binary_data, BUSTUB_PAGE_SIZE)
 - `uint8_t` 是 `<cstdint>` 里的固定宽度类型，libc++ 支持它作为扩展（从 libc++ 文档看，明确支持 int8_t / uint8_t）。
 - 功能完全一样：生成 0~255 的随机字节。
 - 数组用 `uint8_t` 更安全（避免 signed char 的符号扩展问题）。
-
 ### 其他可行方案（如果不想改数组类型）
-
 1. 用 `unsigned int` 或 `int` 生成，再 cast：
    ```cpp
    std::uniform_int_distribution<unsigned int> uniform_dist(0, 255);
@@ -428,17 +426,15 @@ EXPECT_EQ(0, std::memcmp(page0->GetData(), random_binary_data, BUSTUB_PAGE_SIZE)
      random_binary_data[i] = static_cast<char>(uniform_dist(rng));
    }
    ```
-
 2. 用 `std::uniform_int_distribution<int>`（最简单兼容）：
    ```cpp
    std::uniform_int_distribution<int> uniform_dist(0, 255);
    // 同上 cast
    ```
-
 3. 如果你 fork 的是 2022 版本的老仓库，这个 test 很可能已经被上游修复（查官方 bustub master 的 test/buffer/buffer_pool_manager_instance_test.cpp，看看他们怎么写的）。
-
 ### 快速验证
 改完后在 macOS 上重新编译：
+
 ```bash
 cd build
 cmake -DCMAKE_BUILD_TYPE=Debug ..
@@ -447,5 +443,28 @@ make buffer_pool_manager_instance_test
 ```
 
 改成 `uint8_t` 后，macOS Clang 就过了（因为 libc++ 允许 int8_t/uint8_t 作为扩展）。
+这是 BusTub 测试代码里很常见的跨平台坑（macOS 用户经常踩），改成 uint8_t 就能一劳永逸。
 
-这是 BusTub 测试代码里很常见的跨平台坑（macOS 用户经常踩），改成 uint8_t 就能一劳永逸。改完如果还有其他问题，把新报错贴出来，我继续帮你看。
+```shell
+/home/wdidada/cmake-3.30.1-linux-x86_64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/usr/local/bin/ninja -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -G Ninja -S /mnt/d/develops/git/github/cpp/bustub_2022 -B /mnt/d/develops/git/github/cpp/bustub_2022/cmake-build-debug-wsl24_clang
+CMake Warning at CMakeLists.txt:43 (message):
+!! We recommend that you use clang-12 for developing BusTub.  You're using
+Clang 18.1.3, a different version.
+```
+
+```shell
+/mnt/d/develops/git/github/cpp/bustub_2022/cmake-build-debug-wsl24_clang/bin/b_plus_tree_printer
+Enter any of the following commands after the prompt > :
+	i <k>  -- Insert <k> (int64_t) as both key and value).
+	f <filename>  -- insert multiple keys from reading file.
+	c <filename>  -- delete multiple keys from reading file.
+	d <k>  -- Delete key <k> and its associated value.
+	g <filename>.dot  -- Output the tree in graph format to a dot file
+	p -- Print the B+ tree.
+	q -- Quit. (Or use Ctl-D.)
+	? -- Print this help message.
+
+Please Enter Leaf node max size and Internal node max size:
+Example: 5 5
+> 
+```
