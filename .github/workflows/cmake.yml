@@ -35,16 +35,16 @@ jobs:
               tidy: "/usr/bin/clang-tidy-12",
             }
           - {
-              name: "macOS 15",
-              os: macos-15,
+              name: "macOS 15 Intel",
+              os: macos-15-intel,
               cc: "/usr/bin/clang",
               cxx: "/usr/bin/clang++",
               format: "/usr/local/opt/llvm@14/bin/clang-format",
               tidy: "/usr/local/opt/llvm@14/bin/clang-tidy",
             }
           - {
-              name: "macOS 14",
-              os: macos-14,
+              name: "macOS 14 Intel",
+              os: macos-14-large,
               cc: "/usr/bin/clang",
               cxx: "/usr/bin/clang++",
               format: "/usr/local/opt/llvm@14/bin/clang-format",
