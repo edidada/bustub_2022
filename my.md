@@ -430,7 +430,7 @@ make buffer_pool_manager_instance_test
 ./bin/buffer_pool_manager_instance_test   # 或 ctest -R BinaryDataTest -VV
 ```
 
-改成 `uint8_t` 后，macOS Clang 就过了（因为 libc++ 允许 int8_t/uint8_t 作为扩展）。
+改成`uint8_t`后，macOS Clang就过了（因为 libc++允许int8_t/uint8_t作为扩展）。
 这是 BusTub 测试代码里很常见的跨平台坑（macOS 用户经常踩），改成 uint8_t 就能一劳永逸。
 
 ```shell
