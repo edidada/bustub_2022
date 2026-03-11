@@ -55,16 +55,16 @@ jobs:
               os: macos-15,
               cc: "/usr/bin/clang",
               cxx: "/usr/bin/clang++",
-              format: "/usr/local/opt/llvm@15/bin/clang-format",
-              tidy: "/usr/local/opt/llvm@15/bin/clang-tidy",
+              format: "/opt/homebrew/opt/llvm@15/bin/clang-format",
+              tidy: "/opt/homebrew/opt/llvm@15/bin/clang-tidy",
             }
           - {
               name: "macOS 14",
               os: macos-14,
               cc: "/usr/bin/clang",
               cxx: "/usr/bin/clang++",
-              format: "/usr/local/opt/llvm@15/bin/clang-format",
-              tidy: "/usr/local/opt/llvm@15/bin/clang-tidy",
+              format: "/opt/homebrew/opt/llvm@15/bin/clang-format",
+              tidy: "/opt/homebrew/opt/llvm@15/bin/clang-tidy",
             }
     steps:
       - uses: actions/checkout@v4
@@ -91,7 +91,10 @@ jobs:
 
       - name: Check Format
         working-directory: ${{github.workspace}}/build
-        run: which clang-format && which clang-tidy && make check-format
+        run: |
+          which clang-format
+          which clang-tidy
+          make check-format
 
       - name: Check Lint
         working-directory: ${{github.workspace}}/build

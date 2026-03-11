@@ -81,7 +81,7 @@ install_mac() {
   brew ls --versions doxygen || brew install doxygen
   brew ls --versions git || brew install git
   brew search llvm
-  (brew ls --versions llvm | grep 14) || brew install llvm@14
+  (brew ls --versions llvm | grep 15) || brew install llvm@15
 }
 
 install_linux() {
