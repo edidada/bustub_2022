@@ -2,9 +2,9 @@ name: CMake Build Matrix
 
 on:
   push:
-    branches: [master_ubuntu24]
+    branches: [master_ubuntu24__]
   pull_request:
-    branches: [master_ubuntu24]
+    branches: [master_ubuntu24__]
 
 env:
   BUILD_TYPE: Debug
@@ -49,6 +49,22 @@ jobs:
               cxx: "/usr/bin/clang++-18",
               format: "/usr/bin/clang-format-18",
               tidy: "/usr/bin/clang-tidy-18",
+            }
+          - {
+              name: "macOS 15",
+              os: macos-15,
+              cc: "/usr/bin/clang",
+              cxx: "/usr/bin/clang++",
+              format: "/opt/homebrew/opt/llvm@15/bin/clang-format",
+              tidy: "/opt/homebrew/opt/llvm@15/bin/clang-tidy",
+            }
+          - {
+              name: "macOS 14",
+              os: macos-14,
+              cc: "/usr/bin/clang",
+              cxx: "/usr/bin/clang++",
+              format: "/opt/homebrew/opt/llvm@15/bin/clang-format",
+              tidy: "/opt/homebrew/opt/llvm@15/bin/clang-tidy",
             }
     steps:
       - uses: actions/checkout@v4
