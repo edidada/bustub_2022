@@ -67,8 +67,8 @@ auto B_PLUS_TREE_LEAF_PAGE_TYPE::KeyIndex(const KeyType &key, const KeyComparato
 }
 
 INDEX_TEMPLATE_ARGUMENTS
-auto B_PLUS_TREE_LEAF_PAGE_TYPE::Insert(const KeyType &key, const ValueType &value,
-                                        const KeyComparator &keyComparator) -> int {
+auto B_PLUS_TREE_LEAF_PAGE_TYPE::Insert(const KeyType &key, const ValueType &value, const KeyComparator &keyComparator)
+    -> int {
   auto distance_in_array = KeyIndex(key, keyComparator);
   if (distance_in_array == GetSize()) {
     *(array_ + distance_in_array) = {key, value};
@@ -100,8 +100,8 @@ void B_PLUS_TREE_LEAF_PAGE_TYPE::CopyNFrom(MappingType *items, int size) {
 }
 
 INDEX_TEMPLATE_ARGUMENTS
-auto B_PLUS_TREE_LEAF_PAGE_TYPE::Lookup(const KeyType &key, ValueType *value,
-                                        const KeyComparator &keyComparator) const -> bool {
+auto B_PLUS_TREE_LEAF_PAGE_TYPE::Lookup(const KeyType &key, ValueType *value, const KeyComparator &keyComparator) const
+    -> bool {
   int target_in_array = KeyIndex(key, keyComparator);
   if (target_in_array == GetSize() || keyComparator(array_[target_in_array].first, key) != 0) {
     return false;
