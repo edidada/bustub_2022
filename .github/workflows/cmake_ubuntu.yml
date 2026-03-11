@@ -23,32 +23,32 @@ jobs:
               os: "ubuntu-22.04",
               cc: "/usr/bin/gcc",
               cxx: "/usr/bin/g++",
-              format: "/usr/bin/clang-format-12",
-              tidy: "/usr/bin/clang-tidy-12",
+              format: "/usr/bin/clang-format-14",
+              tidy: "/usr/bin/clang-tidy-14",
             }
           - {
               name: "Ubuntu 24.04 GCC",
               os: "ubuntu-24.04",
               cc: "/usr/bin/gcc",
               cxx: "/usr/bin/g++",
-              format: "/usr/bin/clang-format-14",
-              tidy: "/usr/bin/clang-tidy-14",
+              format: "/usr/bin/clang-format-18",
+              tidy: "/usr/bin/clang-tidy-18",
             }
           - {
               name: "Ubuntu 22.04 Clang",
               os: "ubuntu-22.04",
-              cc: "/usr/bin/clang-12",
-              cxx: "/usr/bin/clang++-12",
-              format: "/usr/bin/clang-format-12",
-              tidy: "/usr/bin/clang-tidy-12",
-            }
-          - {
-              name: "Ubuntu 24.04 Clang",
-              os: "ubuntu-24.04",
               cc: "/usr/bin/clang-14",
               cxx: "/usr/bin/clang++-14",
               format: "/usr/bin/clang-format-14",
               tidy: "/usr/bin/clang-tidy-14",
+            }
+          - {
+              name: "Ubuntu 24.04 Clang",
+              os: "ubuntu-24.04",
+              cc: "/usr/bin/clang-18",
+              cxx: "/usr/bin/clang++-18",
+              format: "/usr/bin/clang-format-18",
+              tidy: "/usr/bin/clang-tidy-18",
             }
           - {
               name: "macOS 13",
