@@ -72,7 +72,8 @@ auto Planner::PlanSubquery(const BoundSubqueryRef &table_ref, const std::string 
   // This projection will be removed by eliminate projection rule. It's solely used for renaming columns.
   for (const auto &col : select_node->OutputSchema().GetColumns()) {
     auto expr = std::make_shared<ColumnValueExpression>(0, idx, col.GetType());
-    output_column_names.emplace_back(fmt::format("{}.{}", alias, fmt::join(table_ref.select_list_name_[idx], ".")));
+    auto col_name_joined = fmt::to_string(fmt::join(table_ref.select_list_name_[idx], "."));
+    output_column_names.emplace_back(fmt::format("{}.{}", alias, col_name_joined));
     exprs.push_back(std::move(expr));
     idx++;
   }

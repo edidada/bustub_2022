@@ -28,7 +28,8 @@ auto AbstractPlanNode::ChildrenToString(int indent, bool with_schema) const -> s
       children_str.push_back(fmt::format("{}{}", indent_str, line));
     }
   }
-  return fmt::format("\n{}", fmt::join(children_str, "\n"));
+  auto children_joined = fmt::to_string(fmt::join(children_str, "\n"));
+  return std::string(children_joined);
 }
 
 auto AggregationPlanNode::PlanNodeToString() const -> std::string {

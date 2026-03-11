@@ -28,7 +28,8 @@ auto BoundCTERef::ToString() const -> std::string {
 auto BoundSubqueryRef::ToString() const -> std::string {
   std::vector<std::string> columns;
   for (const auto &name : select_list_name_) {
-    columns.push_back(fmt::format("{}", fmt::join(name, ".")));
+    auto name_joined = fmt::to_string(fmt::join(name, "."));
+    columns.push_back(fmt::format("{}", name_joined));
   }
   return fmt::format("BoundSubqueryRef {{\n  alias={},\n  subquery={},\n  columns={},\n}}", alias_,
                      StringUtil::IndentAllLines(subquery_->ToString(), 2, true), columns);

@@ -13,12 +13,13 @@
 namespace bustub {
 
 auto SelectStatement::ToString() const -> std::string {
+  auto ctes_joined = fmt::to_string(fmt::join(ctes_, ",\n"));
   return fmt::format(
       "BoundSelect {{\n  table={},\n  columns={},\n  groupBy={},\n  having={},\n  where={},\n  limit={},\n  "
       "offset={},\n  order_by={},\n  is_distinct={},\n  ctes={},\n}}",
       StringUtil::IndentAllLines(table_->ToString(), 2, true), select_list_, group_by_, having_, where_, limit_count_,
       limit_offset_, sort_, is_distinct_,
-      StringUtil::IndentAllLines(fmt::format("{}", fmt::join(ctes_, ",\n")), 2, true));
+      StringUtil::IndentAllLines(fmt::format("{}", ctes_joined), 2, true));
 }
 
 }  // namespace bustub

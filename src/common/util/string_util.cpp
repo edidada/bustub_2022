@@ -224,7 +224,8 @@ auto StringUtil::IndentAllLines(const std::string &lines, size_t num_indent, boo
     }
     lines_str.push_back(fmt::format("{}{}", indent_str, line));
   }
-  return fmt::format("{}", fmt::join(lines_str, "\n"));
+  auto lines_joined = fmt::to_string(fmt::join(lines_str, "\n"));
+  return fmt::format("{}", lines_joined);
 }
 
 }  // namespace bustub

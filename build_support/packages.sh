@@ -10,6 +10,7 @@
 ##  * Ubuntu 18.04 (x86-64)
 ##  * Ubuntu 20.04 (x86-64)
 ##  * Ubuntu 22.04 (x86-64)
+##  * Ubuntu 24.04 (x86-64)
 ##  * macOS 11 Big Sur (x86-64 or ARM)
 ##  * macOS 12 Monterey (x86-64 or ARM)
 ## =================================================================
@@ -47,6 +48,7 @@ install() {
         18.04) install_linux ;;
         20.04) install_linux ;;
         22.04) install_linux ;;
+        24.04) install_linux ;;
         *) give_up ;;
       esac
       ;;

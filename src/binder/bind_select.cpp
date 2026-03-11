@@ -546,7 +546,8 @@ static auto ResolveColumnRefFromSchema(const Schema &schema, const std::vector<s
   for (const auto &column : schema.GetColumns()) {
     if (StringUtil::Lower(column.GetName()) == col_name[0]) {
       if (column_ref != nullptr) {
-        throw Exception(fmt::format("{} is ambiguous in schema", fmt::join(col_name, ".")));
+        auto col_name_joined = fmt::to_string(fmt::join(col_name, "."));
+        throw Exception(fmt::format("{} is ambiguous in schema", col_name_joined));
       }
       column_ref = std::make_unique<BoundColumnRef>(std::vector{column.GetName()});
     }
@@ -579,7 +580,8 @@ auto Binder::ResolveColumnRefFromBaseTableRef(const BoundBaseTableRef &table_ref
   }
 
   if (strip_resolved_expr != nullptr && direct_resolved_expr != nullptr) {
-    throw bustub::Exception(fmt::format("{} is ambiguous in table {}", fmt::join(col_name, "."), table_ref.table_));
+    auto col_name_joined = fmt::to_string(fmt::join(col_name, "."));
+    throw bustub::Exception(fmt::format("{} is ambiguous in table {}", col_name_joined, table_ref.table_));
   }
   if (strip_resolved_expr != nullptr) {
     return strip_resolved_expr;
@@ -606,7 +608,8 @@ auto Binder::ResolveColumnRefFromSelectList(const std::vector<std::vector<std::s
   for (const auto &column_full_name : subquery_select_list) {
     if (MatchSuffix(col_name, column_full_name)) {
       if (column_ref != nullptr) {
-        throw Exception(fmt::format("{} is ambiguous in subquery select list", fmt::join(col_name, ".")));
+        auto col_name_joined = fmt::to_string(fmt::join(col_name, "."));
+        throw Exception(fmt::format("{} is ambiguous in subquery select list", col_name_joined));
       }
       column_ref = std::make_unique<BoundColumnRef>(column_full_name);
     }
@@ -634,8 +637,9 @@ auto Binder::ResolveColumnRefFromSubqueryRef(const BoundSubqueryRef &subquery_re
   }
 
   if (strip_resolved_expr != nullptr && direct_resolved_expr != nullptr) {
+    auto col_name_joined = fmt::to_string(fmt::join(col_name, "."));
     throw bustub::Exception(
-        fmt::format("{} is ambiguous in subquery {}", fmt::join(col_name, "."), subquery_ref.alias_));
+        fmt::format("{} is ambiguous in subquery {}", col_name_joined, subquery_ref.alias_));
   }
   if (strip_resolved_expr != nullptr) {
     return strip_resolved_expr;
@@ -655,7 +659,8 @@ auto Binder::ResolveColumnInternal(const BoundTableRef &table_ref, const std::ve
       auto left_column = ResolveColumnInternal(*cross_product_ref.left_, col_name);
       auto right_column = ResolveColumnInternal(*cross_product_ref.right_, col_name);
       if (left_column && right_column) {
-        throw Exception(fmt::format("{} is ambiguous", fmt::join(col_name, ".")));
+        auto col_name_joined = fmt::to_string(fmt::join(col_name, "."));
+        throw Exception(fmt::format("{} is ambiguous", col_name_joined));
       }
       if (left_column != nullptr) {
         return left_column;
@@ -667,7 +672,8 @@ auto Binder::ResolveColumnInternal(const BoundTableRef &table_ref, const std::ve
       auto left_column = ResolveColumnInternal(*join_ref.left_, col_name);
       auto right_column = ResolveColumnInternal(*join_ref.right_, col_name);
       if (left_column != nullptr && right_column != nullptr) {
-        throw Exception(fmt::format("{} is ambiguous", fmt::join(col_name, ".")));
+        auto col_name_joined = fmt::to_string(fmt::join(col_name, "."));
+        throw Exception(fmt::format("{} is ambiguous", col_name_joined));
       }
       if (left_column != nullptr) {
         return left_column;
@@ -698,7 +704,8 @@ auto Binder::ResolveColumn(const BoundTableRef &scope, const std::vector<std::st
   BUSTUB_ASSERT(!scope.IsInvalid(), "invalid scope");
   auto expr = ResolveColumnInternal(scope, col_name);
   if (!expr) {
-    throw bustub::Exception(fmt::format("column {} not found", fmt::join(col_name, ".")));
+    auto col_name_joined = fmt::to_string(fmt::join(col_name, "."));
+    throw bustub::Exception(fmt::format("column {} not found", col_name_joined));
   }
   return expr;
 }

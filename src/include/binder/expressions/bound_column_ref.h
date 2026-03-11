@@ -29,7 +29,10 @@ class BoundColumnRef : public BoundExpression {
     return std::make_unique<BoundColumnRef>(std::move(col_name));
   }
 
-  auto ToString() const -> std::string override { return fmt::format("{}", fmt::join(col_name_, ".")); }
+  auto ToString() const -> std::string override {
+    auto col_name_joined = fmt::to_string(fmt::join(col_name_, "."));
+    return fmt::format("{}", col_name_joined);
+  }
 
   auto HasAggregation() const -> bool override { return false; }
 
