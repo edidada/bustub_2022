@@ -51,20 +51,20 @@ jobs:
               tidy: "/usr/bin/clang-tidy-18",
             }
           - {
-              name: "macOS 13",
-              os: macos-13,
+              name: "macOS 15",
+              os: macos-15,
               cc: "/usr/bin/clang",
               cxx: "/usr/bin/clang++",
-              format: "/usr/local/opt/llvm@14/bin/clang-format",
-              tidy: "/usr/local/opt/llvm@14/bin/clang-tidy",
+              format: "/usr/local/opt/llvm@15/bin/clang-format",
+              tidy: "/usr/local/opt/llvm@15/bin/clang-tidy",
             }
           - {
               name: "macOS 14",
               os: macos-14,
               cc: "/usr/bin/clang",
               cxx: "/usr/bin/clang++",
-              format: "/usr/local/opt/llvm@14/bin/clang-format",
-              tidy: "/usr/local/opt/llvm@14/bin/clang-tidy",
+              format: "/usr/local/opt/llvm@15/bin/clang-format",
+              tidy: "/usr/local/opt/llvm@15/bin/clang-tidy",
             }
     steps:
       - uses: actions/checkout@v4
@@ -98,7 +98,7 @@ jobs:
         run: make check-lint
 
       - name: Check Clang Tidy
-        if: matrix.config.os == 'macos-13' || matrix.config.os == 'macos-14' || matrix.config.os == 'ubuntu-24.04'
+        if: matrix.config.os == 'macos-15' || matrix.config.os == 'macos-14' || matrix.config.os == 'ubuntu-24.04'
         working-directory: ${{github.workspace}}/build
         run: make check-clang-tidy
 
