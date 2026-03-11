@@ -18,8 +18,7 @@ auto SelectStatement::ToString() const -> std::string {
       "BoundSelect {{\n  table={},\n  columns={},\n  groupBy={},\n  having={},\n  where={},\n  limit={},\n  "
       "offset={},\n  order_by={},\n  is_distinct={},\n  ctes={},\n}}",
       StringUtil::IndentAllLines(table_->ToString(), 2, true), select_list_, group_by_, having_, where_, limit_count_,
-      limit_offset_, sort_, is_distinct_,
-      StringUtil::IndentAllLines(fmt::format("{}", ctes_joined), 2, true));
+      limit_offset_, sort_, is_distinct_, StringUtil::IndentAllLines(fmt::format("{}", ctes_joined), 2, true));
 }
 
 }  // namespace bustub
