@@ -91,7 +91,7 @@ jobs:
 
       - name: Check Format
         working-directory: ${{github.workspace}}/build
-        run: make check-format
+        run: which clang-format && which clang-tidy && make check-format
 
       - name: Check Lint
         working-directory: ${{github.workspace}}/build
