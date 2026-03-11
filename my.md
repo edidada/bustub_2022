@@ -468,3 +468,53 @@ Please Enter Leaf node max size and Internal node max size:
 Example: 5 5
 > 
 ```
+
+
+order_by.sit
+
+/mnt/d/develops/git/github/cpp/bustub_2022/cmake-build-debug-wsl24_clang/bin/bustub-shell
+Welcome to the BusTub shell! Type \help to learn more.
+
+bustub> select * from (select * from (select 1, 2, 3));
+bustub> select * from (select * from (select 1, 2, 3));
++------------------------------------+------------------------------------+------------------------------------+
+| __subquery#0.__subquery#1.__item#2 | __subquery#0.__subquery#1.__item#3 | __subquery#0.__subquery#1.__item#4 |
++------------------------------------+------------------------------------+------------------------------------+
+| 1                                  | 2                                  | 3                                  |
++------------------------------------+------------------------------------+------------------------------------+
+bustub> create table t2(v4 int, v5 int, v6 varchar(128));
+bustub> create table t2(v4 int, v5 int, v6 varchar(128));
+Table created with id = 22
+bustub> insert into t2 values (1, 2, 'aa'), (3, 4, 'bb');
+bustub> insert into t2 values (1, 2, 'aa'), (3, 4, 'bb');
++-------------------------------+
+| __bustub_internal.insert_rows |
++-------------------------------+
+| 2                             |
++-------------------------------+
+bustub> create index t2v5 on t2(v5);
+bustub> create index t2v5 on t2(v5);
+Index created with id = 0
+bustub> explain select * from t2 order by v5;
+bustub> explain select * from t2 order by v5;
+=== BINDER ===                                                                            
+BoundSelect {                                                                             
+table=BoundBaseTableRef { table=t2, oid=22 },                                           
+columns=[t2.v4, t2.v5, t2.v6],                                                          
+groupBy=[],                                                                             
+having=,                                                                                
+where=,                                                                                 
+limit=,                                                                                 
+offset=,                                                                                
+order_by=[BoundOrderBy { type=Default, expr=t2.v5 }],                                   
+is_distinct=false,                                                                      
+ctes=,                                                                                  
+}                                                                                         
+=== PLANNER ===                                                                           
+Sort { order_bys=[(Default, #0.1)] } | (t2.v4:INTEGER, t2.v5:INTEGER, t2.v6:VARCHAR)      
+Projection { exprs=[#0.0, #0.1, #0.2] } | (t2.v4:INTEGER, t2.v5:INTEGER, t2.v6:VARCHAR)
+SeqScan { table=t2 } | (t2.v4:INTEGER, t2.v5:INTEGER, t2.v6:VARCHAR)                  
+=== OPTIMIZER ===                                                                         
+IndexScan { index_oid=0 } | (t2.v4:INTEGER, t2.v5:INTEGER, t2.v6:VARCHAR)
+
+bustub> 
