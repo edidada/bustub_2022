@@ -45,9 +45,7 @@ install() {
     LINUX)
       version=$(cat /etc/os-release | grep VERSION_ID | cut -d '"' -f 2)
       case $version in
-        18.04) install_linux ;;
-        20.04) install_linux ;;
-        22.04) install_linux ;;
+        22.04) install_linux_14 ;;
         24.04) install_linux ;;
         *) give_up ;;
       esac
@@ -98,6 +96,22 @@ install_linux() {
       doxygen \
       git \
       g++-18 \
+      pkg-config \
+      zlib1g-dev
+}
+install_linux_14() {
+  # Update apt-get.
+  apt-get -y update
+  # Install packages.
+  apt-get -y install \
+      build-essential \
+      clang-14 \
+      clang-format-14 \
+      clang-tidy-14 \
+      cmake \
+      doxygen \
+      git \
+      g++-13 \
       pkg-config \
       zlib1g-dev
 }
