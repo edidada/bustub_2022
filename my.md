@@ -1,4 +1,24 @@
 # my
+
+wdidada@LAPTOP-wdidada:/mnt/d/develops/git/github/cpp/bustub_2022/cmake-build-debug-wsl24_clang/bin$ ls -la
+b_plus_tree_printer
+bustub-shell
+bustub-sqllogictest
+bustub-terrier-bench
+
+wdidada@LAPTOP-wdidada:/mnt/d/develops/git/github/cpp/bustub_2022/cmake-build-debug-wsl24_clang/lib$ ls -la
+libbustub.a
+libbustub_linenoise.a
+libbustub_murmur3.a
+libduckdb_pg_query.a
+libfmtd.a
+libfort.a
+libgmock.a
+libgmock_main.a
+libgtest.a
+libgtest_main.a
+libutf8proc.a
+
 https://15445.courses.cs.cmu.edu/fall2022/project4/
 
 # lab0
@@ -15,6 +35,8 @@ $ mkdir build
 $ cd build
 $ make extendible_hash_table_test -j$(nproc)
 $ ./test/extendible_hash_table_test
+$ ./test/lru_k_replacer_test
+$ ./test/buffer_pool_manager_instance_test
 
 $ make format
 $ make check-lint
@@ -31,6 +53,9 @@ Task #4 - Concurrent Index
 $ mkdir build
 $ cd build
 $ make b_plus_tree_insert_test -j$(nproc)
+$ ./test/b_plus_tree_concurrent_test
+$ ./test/b_plus_tree_contention_test
+$ ./test/b_plus_tree_delete_test
 $ ./test/b_plus_tree_insert_test
 
 $ # To build the tool
@@ -81,6 +106,34 @@ cd build && make -j$(nproc) shell
 
 make -j$(nproc) sqllogictest
 ./bin/bustub-sqllogictest ../test/sql/p3.00-primer.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.01-seqscan.slt --verbose
+
+./bin/bustub-sqllogictest ../test/sql/baby_arithmetic.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/hash_join.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/intro.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/nested_index_join.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/order_by.slt --verbose
+---   ./bin/bustub-sqllogictest ../test/sql/p3.00-primer.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.02-insert.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.03-delete.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.04-index-scan.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.05-empty-table.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.06-simple-agg.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.07-group-agg-1.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.08-group-agg-2.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.09-simple-join.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.10-multi-way-join.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.11-repeat-execute.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.12-nested-index-join.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.13-sort-limit.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.14-topn.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.15-integration-1.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.16-integration-2.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.leaderboard-q1.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.leaderboard-q2.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/p3.leaderboard-q3.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/subquery.slt --verbose
+./bin/bustub-sqllogictest ../test/sql/update.slt --verbose
 
 make format
 make check-lint
@@ -97,8 +150,10 @@ cd build
 make lock_manager_test
 make deadlock_detection_test
 make transaction_test
-./test/lock_manager_test
 ./test/deadlock_detection_test
+./test/lock_manager_compability_test
+./test/lock_manager_isolation_test
+./test/lock_manager_test
 ./test/transaction_test
 
 make format
